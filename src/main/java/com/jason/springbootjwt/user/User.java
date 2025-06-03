@@ -37,4 +37,10 @@ public class User implements UserDetails {
     public String getUsername() {
         return email;
     }
+
+    @Override
+    public @NonNull String getPassword() {
+        return password;
+    }
+
 }
