@@ -2,9 +2,9 @@ spring:
   application:
     name: spring-boot-jwt
   datasource:
-    url: jdbc:postgresql://localhost:5432/jwt_db
-    username: username
-    password: password
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_NAME:jwt_db}
+    username: ${POSTGRES_USERNAME:username}
+    password: ${POSTGRES_PASSWORD:username}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
