@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +18,7 @@ public class JwtService {
     private final JwtProperties jwtProperties;
 
     public @NonNull String extractUsername(@NonNull String token) {
-        return "todo";
+        return extractClaim(token, Claims::getSubject);
     }
 
     private Claims extractAllClaims(@NonNull String token) {
@@ -27,6 +28,11 @@ public class JwtService {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
+    }
+
+    public <T> T extractClaim(@NonNull String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
     }
 
     public SecretKey getSigningKey() {
