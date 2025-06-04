@@ -4,6 +4,9 @@ import lombok.NonNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "app.jwt")
-public record JwtProperties(@NonNull String secretKey) {
+public record JwtProperties(
+        @NonNull String secretKey,
+        long expirationTime
+) {
 
 }
