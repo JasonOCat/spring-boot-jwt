@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 @Service
@@ -21,8 +22,8 @@ public class JwtService {
 
     private final JwtProperties jwtProperties;
 
-    public @NonNull String extractUsername(@NonNull String token) {
-        return extractClaim(token, Claims::getSubject);
+    public @NonNull Optional<String> extractUsername(@NonNull String token) {
+        return Optional.ofNullable(extractClaim(token, Claims::getSubject));
     }
 
     public String generateToken(@NonNull UserDetails userDetails) {
@@ -47,9 +48,9 @@ public class JwtService {
             @NonNull String token,
             @NonNull UserDetails userDetails
     ) {
-        final String username = extractUsername(token);
-
-        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+        return extractUsername(token)
+                .map(username -> username.equals(userDetails.getUsername()) && !isTokenExpired(token))
+                .orElse(false);
     }
 
     private boolean isTokenExpired(@NonNull String token) {
