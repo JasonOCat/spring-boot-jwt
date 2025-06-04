@@ -43,6 +43,23 @@ public class JwtService {
                 .compact();
     }
 
+    public boolean isTokenValid(
+            @NonNull String token,
+            @NonNull UserDetails userDetails
+    ) {
+        final String username = extractUsername(token);
+
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+    }
+
+    private boolean isTokenExpired(@NonNull String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    private Date extractExpiration(@NonNull String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
     private Claims extractAllClaims(@NonNull String token) {
         return Jwts
                 .parser()
@@ -52,7 +69,10 @@ public class JwtService {
                 .getPayload();
     }
 
-    public <T> T extractClaim(@NonNull String token, Function<Claims, T> claimsResolver) {
+    public <T> T extractClaim(
+            @NonNull String token,
+            @NonNull Function<Claims, T> claimsResolver
+    ) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
