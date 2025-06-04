@@ -19,7 +19,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue
-    private @NonNull Integer id;
+    private Integer id;
     private @NonNull String firstname;
     private @NonNull String lastname;
     private @NonNull String email;
