@@ -19,5 +19,5 @@ spring:
 app:
   jwt:
     secret-key: ${JWT_SECRET_KEY:a1eebefc71b1c604d641f905da0983fef81a08ad0c3bfb27c8cddd0f803a2478}
-    expiration-time: 360000 # in milliseconds = 1 day
+    expiration-time: 86400000 # in milliseconds = 1 day
 
