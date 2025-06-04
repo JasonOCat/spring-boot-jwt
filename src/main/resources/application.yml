@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_NAME:jwt_db}
     username: ${POSTGRES_USERNAME:username}
-    password: ${POSTGRES_PASSWORD:username}
+    password: ${POSTGRES_PASSWORD:password}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -15,4 +15,8 @@ spring:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+app:
+  jwt:
+    secret-key: ${JWT_SECRET_KEY:a1eebefc71b1c604d641f905da0983fef81a08ad0c3bfb27c8cddd0f803a2478}
 
