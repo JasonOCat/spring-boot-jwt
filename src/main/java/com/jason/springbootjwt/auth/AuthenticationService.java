@@ -34,6 +34,10 @@ public class AuthenticationService {
                 .role(Role.USER)
                 .build();
 
+        if (userRepository.findByEmail(request.email()).isPresent()) {
+            throw new IllegalArgumentException("User already exists");
+        }
+
         userRepository.save(user);
 
         var jwtToken = jwtService.generateToken(user);
